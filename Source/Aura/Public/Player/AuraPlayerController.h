@@ -6,7 +6,12 @@
 #include "GameFramework/PlayerController.h"
 #include "AuraPlayerController.generated.h"
 
+// can use struct to forward declare specific items
+
 class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
+
 /**
  * 
  */
@@ -22,9 +27,15 @@ public:
 protected:
 
 	virtual void BeginPlay() override;
+	virtual void SetupInputComponent() override;
 
 private:
 
 	UPROPERTY(Editanywhere, Category = "Input")
 	TObjectPtr<UInputMappingContext> AuraContext;
+
+	UPROPERTY(Editanywhere, Category = "Input")
+	TObjectPtr<UInputAction> MoveAction;
+	
+	void Move(const FInputActionValue &InputActionValue);
 };
