@@ -12,6 +12,7 @@ UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetCont
 	{
 		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
 		OverlayWidgetController->SetWidgetControllerParams(WCParams);
+		OverlayWidgetController->BindCallbacksToDependencies();
 
 		return OverlayWidgetController;
 	}
@@ -24,7 +25,6 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	checkf(OverlayWidgetClass, TEXT("Overlay Widget Class Unitialized, please fill out BP_AuraHUD")); 
 	checkf(OverlayWidgetControllerClass, TEXT("Overlay Widget Controller Class unitialized, please fill out BP_AuraHUD"));
 
-
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), OverlayWidgetClass);
 	OverlayWidget = Cast<UAuraUserWidget>(Widget);
 
@@ -32,8 +32,7 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySyst
 	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
 
 	OverlayWidget->SetWidgetController(WidgetController);
-
-
+	WidgetController->BroadcastInitialValues();
 
 	Widget->AddToViewport();
 
