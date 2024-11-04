@@ -18,8 +18,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetWidgetController(UObject* InWidgetController);
 
-	UPROPERTY(BlueprintReadOnly) // read it but now edit it in blueprint
-		TObjectPtr<UObject> WidgetController;
+	UPROPERTY(BlueprintReadWrite) // read it but now edit it in blueprint
+	TObjectPtr<UObject> WidgetController;
 
 protected:
 
