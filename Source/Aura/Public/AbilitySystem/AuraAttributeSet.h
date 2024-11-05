@@ -50,6 +50,13 @@ struct FEffectProperties
 
 // Steps: Create attribute variable, replicate it using "ReplicatedUsing", creat rep notify that can contain the old value, define notify, add typical GAMEPLAYATTRIBUTE_REPNOTIFY, then set it to LifetimeProps 
 
+// typedef is specific to the FGameplayAttribute() signature, but TStaticFuncPtr is generic to any signature chosen
+// typedef TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr FAttributeFuncPtr; // puts an alias for anything
+
+template<class T>
+using TStaticFuncPtr = typename TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr; // this is a template alias for the big function after typename, makes is more flexible
+
+
 UCLASS()
 
 class AURA_API UAuraAttributeSet : public UAttributeSet
@@ -66,6 +73,8 @@ public:
 
 	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 	
+	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
+
 	// ** PRIMARY ATTRIBUTES ** //
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Primary Attributes") 
