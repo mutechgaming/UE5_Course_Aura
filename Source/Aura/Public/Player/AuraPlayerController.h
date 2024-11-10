@@ -5,12 +5,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Interaction/EnemyInterface.h"
+#include "GameplayTagContainer.h"
 #include "AuraPlayerController.generated.h"
 
 // can use struct to forward declare specific items
 
 class UInputMappingContext;
 class UInputAction;
+class UAuraInputConfig;
 class IEnemyInterface;
 struct FInputActionValue; 
 
@@ -46,4 +48,11 @@ private:
 
 	TScriptInterface<IEnemyInterface> LastActor;
 	TScriptInterface<IEnemyInterface> ThisActor;
+
+	void AbilityInputTagPressed(FGameplayTag InputTag);
+	void AbilityInputTagReleased(FGameplayTag InputTag);
+	void AbilityInputTagHeld(FGameplayTag InputTag);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	TObjectPtr<UAuraInputConfig> InputConfig;
 };

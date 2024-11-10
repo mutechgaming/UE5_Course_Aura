@@ -26,7 +26,7 @@ template<class UserClass, typename PressedFuncType, typename ReleasedFuncType, t
 inline void UAuraInputComponent::BindAbilityActions(const UAuraInputConfig* InputConfig, UserClass* Object, PressedFuncType PressedFunc, ReleasedFuncType ReleasedFunc, HeldFuncType HeldFunc)
 {
 	check(InputConfig);
-	for (const FAuraInputAction& Action : InputCongig->AbilityInputActions)
+	for (const FAuraInputAction& Action : InputConfig->AbilityInputActions)
 	{
 		if (Action.InputAction && Action.InputTag.IsValid())
 		{
