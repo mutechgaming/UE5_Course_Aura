@@ -6,8 +6,7 @@
 #include "UObject/Interface.h"
 #include "CombatInterface.generated.h"
 
-
-UINTERFACE(MinimalAPI)
+UINTERFACE(MinimalAPI, BlueprintType)
 class UCombatInterface : public UInterface
 {
 	GENERATED_BODY()
@@ -25,4 +24,7 @@ public:
 
 	virtual int32 GetPlayerLevel();
 	virtual FVector GetCombatSocketLocation(); 
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void UpdatingFacingTarget(const FVector& Target);
 };
