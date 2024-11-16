@@ -6,6 +6,8 @@
 #include "UObject/Interface.h"
 #include "CombatInterface.generated.h"
 
+class UAnimMontage;
+
 UINTERFACE(MinimalAPI, BlueprintType)
 class UCombatInterface : public UInterface
 {
@@ -27,4 +29,10 @@ public:
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void UpdatingFacingTarget(const FVector& Target);
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable) // Automatic generate a virutal - need use to implementation
+	UAnimMontage* GetHitReactMontage();
+
+
+	virtual void Die() = 0;
 };

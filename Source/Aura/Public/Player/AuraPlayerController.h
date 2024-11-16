@@ -8,12 +8,14 @@
 #include "GameplayTagContainer.h"
 #include "AuraPlayerController.generated.h"
 
+
 // can use struct to forward declare specific items
 
 class UInputMappingContext;
 class UInputAction;
 class UAuraInputConfig;
 class UAuraAbilitySystemComponent;
+class UDamageTextComponent;
 class USplineComponent;
 class IEnemyInterface;
 struct FInputActionValue; 
@@ -30,6 +32,9 @@ public:
 
 	AAuraPlayerController();
 	virtual void PlayerTick(float DeltaTime) override;
+
+	UFUNCTION(Client, Reliable) // when client or being replicated, need to add implementations to the cpp definition
+	void ShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter);
 
 protected:
 
@@ -70,7 +75,6 @@ private:
 
 	UAuraAbilitySystemComponent* GetASC(); 
 
-
 	FVector CachedDestination = FVector::ZeroVector;
 	float FollowTime = 0.f; 
 	float ShortPressedThreshold = 0.5f;
@@ -85,6 +89,7 @@ private:
 
 	void AutoRun();
 
-
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 
 };
