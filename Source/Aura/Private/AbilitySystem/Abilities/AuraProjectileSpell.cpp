@@ -1,8 +1,7 @@
-// Copyrighte Steven Mutek
+// Copyright Steven Mutek
 
 
 #include "AbilitySystem/Abilities/AuraProjectileSpell.h"
-
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
@@ -44,8 +43,9 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 		Actors.Add(Projectile);
 		EffectContextHandle.AddActors(Actors);
 		FHitResult HitResult;
-		EffectContextHandle.AddHitResult(HitResult);
 		HitResult.Location = ProjectileTargetLocation;
+		EffectContextHandle.AddHitResult(HitResult);
+
 
 
 		FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), EffectContextHandle);

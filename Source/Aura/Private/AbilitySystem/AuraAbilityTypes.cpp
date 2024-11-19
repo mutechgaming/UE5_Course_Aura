@@ -1,4 +1,4 @@
-// Copyrighte Steven Mutek
+// Copyright Steven Mutek
 
 
 #include "AbilitySystem/AuraAbilityTypes.h"
