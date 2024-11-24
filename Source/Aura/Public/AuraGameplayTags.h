@@ -18,14 +18,12 @@ public:
 	static void InitializeNativeGameplayTags();
 
 	// ** Primary Attributes ** //
-
 	FGameplayTag Attribute_Primary_Strength;
 	FGameplayTag Attribute_Primary_Intelligence;
 	FGameplayTag Attribute_Primary_Resilience;
 	FGameplayTag Attribute_Primary_Vigor;
 
 	// ** Secondary Attributes ** //
-
 	FGameplayTag Attribute_Secondary_Armor;
 	FGameplayTag Attribute_Secondary_ArmorPenetration;
 	FGameplayTag Attribute_Secondary_BlockChance;
@@ -37,13 +35,13 @@ public:
 	FGameplayTag Attribute_Secondary_MaxHealth;
 	FGameplayTag Attribute_Secondary_MaxMana;
 
-	// ** Vital Attributes ** //
 
+
+	// ** Vital Attributes ** //
 	FGameplayTag Attribute_Vital_Health;
 	FGameplayTag Attribute_Vital_Mana;
 
 	// ** Input Tags ** //
-
 	FGameplayTag InputTag_LMB;
 	FGameplayTag InputTag_RMB;
 	FGameplayTag InputTag_1;
@@ -54,9 +52,21 @@ public:
 	// ** Combat & Meta Tags ** //
 	FGameplayTag Damage;
 	FGameplayTag Damage_Fire;
+	FGameplayTag Damage_Lightning;
+	FGameplayTag Damage_Arcane;
+	FGameplayTag Damage_Physical;
 	FGameplayTag Effects_HitReact;
 
-	TArray<FGameplayTag> DamageTypes;
+	// ** Resistances ** //
+	FGameplayTag Attribute_Resistance_Fire;
+	FGameplayTag Attribute_Resistance_Lightning;
+	FGameplayTag Attribute_Resistance_Arcane;
+	FGameplayTag Attribute_Resistance_Physical;
+
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
+
+
+
 
 protected:
 
