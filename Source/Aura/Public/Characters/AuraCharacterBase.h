@@ -33,7 +33,9 @@ public:
 
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath(); 
- 
+
+ 	virtual FVector GetCombatSocketLocation_Implementation() override;
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -42,8 +44,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName WeaponTipSocketName;
+	
 
-	virtual FVector GetCombatSocketLocation() override;
 
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
