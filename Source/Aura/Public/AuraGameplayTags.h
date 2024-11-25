@@ -35,8 +35,6 @@ public:
 	FGameplayTag Attribute_Secondary_MaxHealth;
 	FGameplayTag Attribute_Secondary_MaxMana;
 
-
-
 	// ** Vital Attributes ** //
 	FGameplayTag Attribute_Vital_Health;
 	FGameplayTag Attribute_Vital_Mana;
@@ -62,6 +60,9 @@ public:
 	FGameplayTag Attribute_Resistance_Lightning;
 	FGameplayTag Attribute_Resistance_Arcane;
 	FGameplayTag Attribute_Resistance_Physical;
+
+	// ** Abilities ** //
+	FGameplayTag Abilities_Attack;
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
