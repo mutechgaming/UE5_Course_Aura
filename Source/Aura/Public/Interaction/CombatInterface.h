@@ -35,6 +35,11 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable) // Automatic generate a virutal - need use to implementation
 	UAnimMontage* GetHitReactMontage();
 
-
 	virtual void Die() = 0;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool IsDead();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	AActor* GetAvatar();
 };

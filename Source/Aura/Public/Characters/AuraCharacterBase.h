@@ -28,25 +28,29 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override; // Getters that return this pointer
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; } // Getters that return this pointer
 
-	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
-	virtual void Die() override;
-
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath(); 
 
+	// ** Combat Interface ** //
+
  	virtual FVector GetCombatSocketLocation_Implementation() override;
+	virtual bool IsDead_Implementation() override;
+	virtual AActor* GetAvatar_Implementation() override;
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+	virtual void Die() override;
 
 protected:
+
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
+	bool bDead = false;
+
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName WeaponTipSocketName;
 	
-
-
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 
