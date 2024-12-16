@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
-#include "GameplayTagContainer.h"
 #include "AuraAbilitySystemComponent.generated.h"
  
 class UGameplayAbility;
+struct FGameplayTag;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer&);
 DECLARE_MULTICAST_DELEGATE_OneParam(FAbilitiesGiven, UAuraAbilitySystemComponent*); 
@@ -38,6 +38,11 @@ public:
 
 	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
+
+	void UpgradeAttributes(const FGameplayTag& AttributeTag);
+
+	UFUNCTION(Server, Reliable)
+	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
 
 protected:
 
