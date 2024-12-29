@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
 #include "Interaction/CombatInterface.h"
+#include "GameplayTagContainer.h"
 #include "AuraDamageGameplayAbility.generated.h"
 
 class UGameplayEffect;
@@ -29,4 +30,6 @@ protected:
 
 	UFUNCTION(BlueprintPure)
 	FTaggedMontage GetRandomTaggedMontageFromArray(const TArray<FTaggedMontage>& TaggedMontages);
+
+	float GetDamageByDamageType(float InLevel, FGameplayTag DamageType);
 }; 
