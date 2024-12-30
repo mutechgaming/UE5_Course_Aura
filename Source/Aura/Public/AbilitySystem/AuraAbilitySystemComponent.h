@@ -13,6 +13,7 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContaine
 DECLARE_MULTICAST_DELEGATE(FAbilitiesGiven);
 DECLARE_DELEGATE_OneParam(FForEachAbility, const FGameplayAbilitySpec&);
 DECLARE_MULTICAST_DELEGATE_ThreeParams(FAbilityStatusChanged, const FGameplayTag& /*AbilityTag*/, const FGameplayTag& /*StatusTag*/, int32 /*AbilityLevel*/); // ep. 285, 291
+DECLARE_MULTICAST_DELEGATE_FourParams(FAbilityEquipped, FGameplayTag /*AbilityTag*/, FGameplayTag /*Status*/, FGameplayTag /*Slot*/, FGameplayTag /*PreviousSlot*/) // ep. 299
 
 /**
  * 
@@ -29,6 +30,7 @@ public:
 	FEffectAssetTags EffectAssetTags;
 	FAbilitiesGiven AbilitiesGivenDelegate;
 	FAbilityStatusChanged AbilityStatusChanged; // ep. 285
+	FAbilityEquipped AbilityEquipped; // ep. 299
 
 	void AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities);
 	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilities);
@@ -42,6 +44,9 @@ public:
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 	static FGameplayTag GetStatusFromSpec(const FGameplayAbilitySpec& AbilitySpec);
 
+	FGameplayTag GetStatusFromAbilityTag(FGameplayTag AbilityTag); // ep. 299
+	FGameplayTag GetInputTagFromAbilityTag(FGameplayTag AbilityTag); // ep. 299
+
 	FGameplayAbilitySpec* GetSpecFromAbilityTag(const FGameplayTag& AbilityTag); // ep. 284
 
 	void UpgradeAttributes(const FGameplayTag& AttributeTag);
@@ -54,7 +59,18 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerSpendSpellPoint(const FGameplayTag& AbilityTag); // ep. 291
 
+	UFUNCTION(Server, Reliable)
+	void ServerEquipAbility(FGameplayTag AbilityTag, FGameplayTag Slot); // ep. 299
+
+	void ClientEquipAbility(FGameplayTag AbilityTag, FGameplayTag Status, FGameplayTag Slot, FGameplayTag PreviousSlot); // ep. 299
+ 
 	bool GetDescriptionsByAbilityTag(const FGameplayTag& AbilityTag, FString& OutDescription, FString& OutNextLevelDescription);  // ep. 293
+	
+	void ClearSlot(FGameplayAbilitySpec* Spec); // ep. 299
+
+	void ClearAbilitiesOfSlot(FGameplayTag Slot); // ep. 299
+
+	bool AbilityHasSlot(FGameplayAbilitySpec* Spec, FGameplayTag Slot); // ep. 299
 
 protected:
 
