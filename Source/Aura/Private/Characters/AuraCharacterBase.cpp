@@ -15,6 +15,10 @@ AAuraCharacterBase::AAuraCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	BurnDebuffComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>("BurnDebuffComponent");
+	BurnDebuffComponent->SetupAttachment(GetRootComponent());
+	BurnDebuffComponent->DebuffTag = FAuraGameplayTags::Get().Debuff_Burn;
+
 	GetCapsuleComponent()->SetGenerateOverlapEvents(false);
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
@@ -36,10 +40,10 @@ UAnimMontage* AAuraCharacterBase::GetHitReactMontage_Implementation()
 	return HitReactMontage;
 }
 
-void AAuraCharacterBase::Die()
+void AAuraCharacterBase::Die(FVector DeathImpulse)
 {
 	Weapon->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, true));
-	MulticastHandleDeath();
+	MulticastHandleDeath(DeathImpulse);
 }
 
 TArray<FTaggedMontage> AAuraCharacterBase::GetAttackMontages_Implementation()
@@ -79,21 +83,36 @@ ECharacterClass AAuraCharacterBase::GetCharacterClass_Implementation()
 	return CharacterClass;
 }
 
-void AAuraCharacterBase::MulticastHandleDeath_Implementation()
+FOnASCRegistered AAuraCharacterBase::GetOnASCRegisteredDelegate()
+{
+	return OnASCRegistered;
+}
+
+FOnDeath AAuraCharacterBase::GetOnDeathDelegate()
+{
+	return OnDeath;
+}
+
+void AAuraCharacterBase::MulticastHandleDeath_Implementation(FVector DeathImpulse)
 {
 	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation(), GetActorRotation());
 	Weapon->SetSimulatePhysics(true);
 	Weapon->SetEnableGravity(true);
 	Weapon->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	Weapon->AddImpulse(DeathImpulse * 0.1f, NAME_None, true);
 
 	GetMesh()->SetSimulatePhysics(true);
 	GetMesh()->SetEnableGravity(true);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	GetMesh()->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	GetMesh()->AddImpulse(DeathImpulse, NAME_None, true);
+
+	BurnDebuffComponent->Deactivate();
 
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Dissolve();
 	bDead = true;
+	OnDeath.Broadcast(this);
 }
 
 void AAuraCharacterBase::BeginPlay()

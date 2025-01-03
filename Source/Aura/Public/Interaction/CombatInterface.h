@@ -8,8 +8,12 @@
 #include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "CombatInterface.generated.h"
 
+class UAbilitySystemComponent;
 class UAnimMontage;
 class UNiagaraSystem;
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnASCRegistered, UAbilitySystemComponent*); // ep. 311
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeath, AActor*, DeadActor); // ep. 311
 
 USTRUCT(BlueprintType)
 struct FTaggedMontage
@@ -58,7 +62,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable) // Automatic generate a virutal - need use to implementation
 	UAnimMontage* GetHitReactMontage();
 
-	virtual void Die() = 0;
+	virtual void Die(FVector DeathImpulse) = 0;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	bool IsDead();
@@ -84,4 +88,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	ECharacterClass GetCharacterClass();
 
+	virtual FOnASCRegistered GetOnASCRegisteredDelegate() = 0; // ep. 311
+
+	virtual FOnDeath GetOnDeathDelegate() = 0; // ep. 311
 };

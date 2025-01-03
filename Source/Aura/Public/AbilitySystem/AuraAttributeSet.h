@@ -239,6 +239,12 @@ public:
 
 private:
 
+	void HandleIncomingDamage(FEffectProperties Props); // ep. 310
+
+	void HandleIncomingXP(FEffectProperties Props); // ep. 310
+
+	void Debuff(FEffectProperties Props); // ep. 310
+
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
 
 	void ShowFloatingText(const FEffectProperties& Props, float Damage, bool bIsBlockedHit, bool bIsCriticalHit);

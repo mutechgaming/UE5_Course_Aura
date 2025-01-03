@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "Interaction/CombatInterface.h"
 #include "AbilitySystem/Data/CharacterClassInfo.h"
+#include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "AuraCharacterBase.generated.h"
 
 class UAbilitySystemComponent;
@@ -31,7 +32,7 @@ public:
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; } // Getters that return this pointer
 
 	UFUNCTION(NetMulticast, Reliable)
-	virtual void MulticastHandleDeath(); 
+	virtual void MulticastHandleDeath(FVector DeathImpulse);
 
 	// ** Combat Interface ** //
 
@@ -39,13 +40,19 @@ public:
 	virtual bool IsDead_Implementation() override;
 	virtual AActor* GetAvatar_Implementation() override;
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
-	virtual void Die() override;
+	virtual void Die(FVector DeathImpulse) override;
 	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
 	virtual UNiagaraSystem* GetBloodEffect_Implementation() override; 
 	virtual FTaggedMontage GetTaggedMontageByTag_Implementation(const FGameplayTag& MontageTag) override;
 	virtual int32 GetMinionCount_Implementation() override;
 	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
+	virtual FOnASCRegistered GetOnASCRegisteredDelegate() override; // ep. 311
+	virtual FOnDeath GetOnDeathDelegate() override; // ep. 311
+
+
+	FOnASCRegistered OnASCRegistered; // ep. 311
+	FOnDeath OnDeath; // ep. 311
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;
@@ -121,6 +128,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
 	ECharacterClass  CharacterClass = ECharacterClass::Warrior;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
 
 private:
 

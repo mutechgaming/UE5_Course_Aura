@@ -84,6 +84,17 @@ public:
 	FGameplayTag Abilities_Type_Passive;
 	FGameplayTag Abilities_Type_None;
 
+	// ** Debuffs ** //  // ep. 303
+	FGameplayTag Debuff_Burn; 
+	FGameplayTag Debuff_Stun;  
+	FGameplayTag Debuff_Arcane;  
+	FGameplayTag Debuff_Physical;  
+
+	FGameplayTag Debuff_Chance;
+	FGameplayTag Debuff_Damage;
+	FGameplayTag Debuff_Duration;
+	FGameplayTag Debuff_Frequency;
+
 	// ** Cooldowns ** //
 	FGameplayTag Cooldown_Fire_FireBolt;
 
@@ -100,6 +111,7 @@ public:
 	FGameplayTag Montage_Attack_4;
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;
 
 
 protected:
