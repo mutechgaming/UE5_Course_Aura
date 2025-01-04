@@ -27,6 +27,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = true))
 	FDamageEffectParams DamageEffectParams; // ep. 306
 
+	UPROPERTY()
+	TObjectPtr<USceneComponent> HomingTargetSceneComponent; // ep. 318
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void Destroyed() override;

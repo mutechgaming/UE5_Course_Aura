@@ -87,6 +87,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USplineComponent> Spline;
 
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<class UNiagaraSystem> ClickNiagaraSystem;
+
 	void AutoRun();
 
 	UPROPERTY(EditDefaultsOnly)

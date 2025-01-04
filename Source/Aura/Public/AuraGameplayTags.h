@@ -110,6 +110,12 @@ public:
 	FGameplayTag Montage_Attack_3;
 	FGameplayTag Montage_Attack_4;
 
+	//** Player Tags **//
+	FGameplayTag Player_Block_InputPressed; // ep. 323
+	FGameplayTag Player_Block_InputHeld; // ep. 323
+	FGameplayTag Player_Block_InputReleased; // ep. 323
+	FGameplayTag Player_Block_CursorTrace; // ep. 323
+
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;
 
