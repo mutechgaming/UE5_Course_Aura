@@ -22,10 +22,21 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StoreOwnerVariables();
 
+	UFUNCTION(BlueprintCallable)
+	void TraceFirstTarget(FVector BeamTargetLocation);
+
+	UFUNCTION(BlueprintCallable)
+	void StoreAdditionalTargets(TArray<AActor*>& OutAdditionalTargets);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void PrimaryTargetDied(AActor* DeadActor);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void AdditionalTargetDied(AActor* DeadActor);
 
 protected:
 
-	UPROPERTY(BlueprintReadWrite, Category = "Beam")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Beam")
 	FVector MouseHitLocation;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Beam")
@@ -36,5 +47,10 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Beam")
 	TObjectPtr<ACharacter> OwnerCharacter;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Beam")
+	int32 MaxNumShockTargets = 5.f;
+
+
 };
 

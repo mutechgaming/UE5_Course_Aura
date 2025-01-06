@@ -28,6 +28,8 @@ class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInte
 public:
 	AAuraCharacterBase();
 
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override; // Getters that return this pointer
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; } // Getters that return this pointer
 
@@ -47,17 +49,34 @@ public:
 	virtual int32 GetMinionCount_Implementation() override;
 	virtual void IncrementMinionCount_Implementation(int32 Amount) override;
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
-	virtual FOnASCRegistered GetOnASCRegisteredDelegate() override; // ep. 311
-	virtual FOnDeath GetOnDeathDelegate() override; // ep. 311
+	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() override; // ep. 311
+	virtual FOnDeathSignature& GetOnDeathDelegate() override; // ep. 333
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() override; // ep. 325
+	virtual bool IsBeingShocked_Implementation() const override; // ep.337
+	virtual void SetIsBeingShocked_Implementation(bool bInShock) override; // ep.337
 
 
 
 	FOnASCRegistered OnASCRegistered; // ep. 311
-	FOnDeath OnDeath; // ep. 311
+	FOnDeathSignature OnDeathDelegate; // ep. 333
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;
+
+	UPROPERTY(ReplicatedUsing=OnRep_Stunned, BlueprintReadOnly)
+	bool bIsStunned = false; // ep. 335
+
+	UPROPERTY(ReplicatedUsing = OnRep_Burned, BlueprintReadOnly)
+	bool bIsBurned = false; // ep. 336
+
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	bool bIsBeingShocked = false; // ep. 337
+
+	UFUNCTION()
+	virtual void OnRep_Stunned(); // ep. 336
+
+	UFUNCTION()
+	virtual void OnRep_Burned(); // ep 336
 
 protected:
 
@@ -67,6 +86,9 @@ protected:
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 
 	bool bDead = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	float BaseWalkSpeed = 600.f;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	FName WeaponTipSocketName;
@@ -87,6 +109,8 @@ protected:
 	TObjectPtr<UAttributeSet> AttributeSet;
 
 	virtual void InitAbilityActorInfo();
+
+	virtual void StunTagChanged(FGameplayTag CallbackTag, int32 NewCount); // ep. 335
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
@@ -133,6 +157,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UDebuffNiagaraComponent> StunDebuffComponent;
 
 private:
 

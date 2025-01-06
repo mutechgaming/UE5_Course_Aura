@@ -28,10 +28,6 @@ void UDebuffNiagaraComponent::BeginPlay()
 				NewASC->RegisterGameplayTagEvent(DebuffTag, EGameplayTagEventType::NewOrRemoved).AddUObject(this, &UDebuffNiagaraComponent::DebuffTagChanged);
 		});
 	}
-	if (CombatInterface)
-	{
-		CombatInterface->GetOnDeathDelegate().AddDynamic(this, &UDebuffNiagaraComponent::OnOwnerDeath);
-	}
 }
 
 void UDebuffNiagaraComponent::DebuffTagChanged(FGameplayTag CallbackTag, int32 NewCount)
@@ -47,9 +43,4 @@ void UDebuffNiagaraComponent::DebuffTagChanged(FGameplayTag CallbackTag, int32 N
 	{
 		Deactivate();
 	}
-}
-
-void UDebuffNiagaraComponent::OnOwnerDeath(AActor* DeadActor)
-{
-	Deactivate();
 }

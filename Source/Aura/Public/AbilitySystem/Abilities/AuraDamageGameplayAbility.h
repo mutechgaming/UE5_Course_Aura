@@ -24,6 +24,9 @@ public:
 	UFUNCTION(BlueprintPure)
 	FDamageEffectParams MakeDamageEffectParamsFromClassDefaults(AActor* TargetActor = nullptr); // ep. 305
 
+	UFUNCTION(BlueprintPure)
+	float GetDamageAtLevel();
+
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)

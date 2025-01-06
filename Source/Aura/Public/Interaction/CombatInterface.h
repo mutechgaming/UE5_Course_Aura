@@ -13,7 +13,7 @@ class UAnimMontage;
 class UNiagaraSystem;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnASCRegistered, UAbilitySystemComponent*); // ep. 311
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeath, AActor*, DeadActor); // ep. 311
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathSignature, AActor*, DeadActor); // ep. 333
 
 USTRUCT(BlueprintType)
 struct FTaggedMontage
@@ -88,13 +88,19 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	ECharacterClass GetCharacterClass();
 
-	virtual FOnASCRegistered GetOnASCRegisteredDelegate() = 0; // ep. 311
+	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() = 0; // ep. 311
 
-	virtual FOnDeath GetOnDeathDelegate() = 0; // ep. 311
+	virtual FOnDeathSignature& GetOnDeathDelegate() = 0; // ep. 333 & really important
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetInShockLoop(bool bInLoop); // ep. 320
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	USkeletalMeshComponent* GetWeapon(); // ep. 325
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	bool IsBeingShocked() const; // ep. 337
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void SetIsBeingShocked(bool bInShock); // ep. 337
 };
