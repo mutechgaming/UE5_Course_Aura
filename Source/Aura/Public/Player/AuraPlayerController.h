@@ -12,6 +12,7 @@
 // can use struct to forward declare specific items
 
 class UInputMappingContext;
+class AMagicCircle; 
 class UInputAction;
 class UAuraInputConfig;
 class UAuraAbilitySystemComponent;
@@ -19,6 +20,7 @@ class UDamageTextComponent;
 class USplineComponent;
 class IEnemyInterface;
 struct FInputActionValue; 
+
 
 /**
  * 
@@ -35,6 +37,12 @@ public:
 
 	UFUNCTION(Client, Reliable) // when client or being replicated, need to add implementations to the cpp definition
 	void ShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter, bool bIsBlockedHit, bool bIsCriticalHit);
+
+	UFUNCTION(BlueprintCallable)
+	void ShowMagicCircle(UMaterialInterface* DecalMaterial);
+
+	UFUNCTION(BlueprintCallable)
+	void HideMagicCircle();
 
 protected:
 
@@ -95,4 +103,12 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AMagicCircle> MagicCircleClass; // ep. 346
+
+	UPROPERTY() 
+	TObjectPtr<AMagicCircle> MagicCircle; // ep. 346
+
+
+	void UpdateMagicCircleLocation();
 };

@@ -71,6 +71,7 @@ public:
 	FGameplayTag Abilities_Summon;
 	FGameplayTag Abilities_Fire_FireBolt;
 	FGameplayTag Abilities_Lightning_Electrocute;
+	FGameplayTag Abilities_Arcane_ArcaneShards;
 
 	FGameplayTag Abilities_None;
 
@@ -83,6 +84,13 @@ public:
 	FGameplayTag Abilities_Type_Offensive;
 	FGameplayTag Abilities_Type_Passive;
 	FGameplayTag Abilities_Type_None;
+
+	//** Passive Spells**//
+	FGameplayTag Abilities_Passive_HaloOfProtection;
+	FGameplayTag Abilities_Passive_LifeSiphon;
+	FGameplayTag Abilities_Passive_ManaSiphon;
+
+
 
 	// ** Debuffs ** //  // ep. 303
 	FGameplayTag Debuff_Burn; 
@@ -115,6 +123,8 @@ public:
 	FGameplayTag Player_Block_InputHeld; // ep. 323
 	FGameplayTag Player_Block_InputReleased; // ep. 323
 	FGameplayTag Player_Block_CursorTrace; // ep. 323
+
+
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;

@@ -14,6 +14,7 @@ class UNiagaraSystem;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnASCRegistered, UAbilitySystemComponent*); // ep. 311
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDeathSignature, AActor*, DeadActor); // ep. 333
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnDamageSignature, float /*DamageAmount*/); // ep. 357
 
 USTRUCT(BlueprintType)
 struct FTaggedMontage
@@ -91,6 +92,8 @@ public:
 	virtual FOnASCRegistered& GetOnASCRegisteredDelegate() = 0; // ep. 311
 
 	virtual FOnDeathSignature& GetOnDeathDelegate() = 0; // ep. 333 & really important
+
+	virtual FOnDamageSignature& GetOnDamageSignature() = 0; // ep. 357
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void SetInShockLoop(bool bInLoop); // ep. 320

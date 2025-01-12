@@ -28,7 +28,11 @@ class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInte
 public:
 	AAuraCharacterBase();
 
+	virtual void Tick(float DeltaTime) override;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+
+	virtual float TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override; // ep. 357
 
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override; // Getters that return this pointer
 	UAttributeSet* GetAttributeSet() const { return AttributeSet; } // Getters that return this pointer
@@ -54,11 +58,12 @@ public:
 	virtual USkeletalMeshComponent* GetWeapon_Implementation() override; // ep. 325
 	virtual bool IsBeingShocked_Implementation() const override; // ep.337
 	virtual void SetIsBeingShocked_Implementation(bool bInShock) override; // ep.337
-
+	virtual FOnDamageSignature& GetOnDamageSignature() override; // ep. 357
 
 
 	FOnASCRegistered OnASCRegistered; // ep. 311
 	FOnDeathSignature OnDeathDelegate; // ep. 333
+	FOnDamageSignature OnDamageDelegate; // ep. 357
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;
@@ -171,4 +176,16 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<UAnimMontage> HitReactMontage;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<class UPassiveNiagaraComponent> HaloOfProtectionNiagaraComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<class UPassiveNiagaraComponent> LifeSiphonNiagaraComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<class UPassiveNiagaraComponent> ManaSiphonNiagaraComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<USceneComponent> EffectAttachComponent;
 };
