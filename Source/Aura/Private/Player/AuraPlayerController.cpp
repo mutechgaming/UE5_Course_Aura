@@ -2,6 +2,7 @@
 
 
 #include "Player/AuraPlayerController.h"
+#include "Aura/Aura.h"
 #include "EnhancedInputSubsystems.h"
 #include "Input/AuraInputComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
@@ -100,9 +101,26 @@ void AAuraPlayerController::CursorTrace()
 {
 	if (GetASC() && GetASC()->HasMatchingGameplayTag(FAuraGameplayTags::Get().Player_Block_CursorTrace))
 	{
-		return;
+		if (LastActor)LastActor->UnHighlightActor();
+		if (ThisActor)ThisActor->UnHighlightActor();
+		LastActor = nullptr;
+		ThisActor = nullptr;
 	}
-	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit); 
+	ECollisionChannel TraceChannel = IsValid(MagicCircle) ? ECC_ExcludePlayers : ECC_Visibility;
+	
+	
+	/*if (IsValid(MagicCircle))
+	{
+		TraceChannel = ECC_ExcludePlayers;
+	}
+	else
+	{
+		TraceChannel = ECC_Visibility;
+	}
+	*/ 
+
+
+	GetHitResultUnderCursor(TraceChannel, false, CursorHit); 
 	if (!CursorHit.bBlockingHit) return;
 
 	LastActor = ThisActor;
