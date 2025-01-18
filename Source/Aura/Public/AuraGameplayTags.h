@@ -70,6 +70,7 @@ public:
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;
 	FGameplayTag Abilities_Fire_FireBolt;
+	FGameplayTag Abilities_Fire_FireBlast;
 	FGameplayTag Abilities_Lightning_Electrocute;
 	FGameplayTag Abilities_Arcane_ArcaneShards;
 
@@ -89,8 +90,6 @@ public:
 	FGameplayTag Abilities_Passive_HaloOfProtection;
 	FGameplayTag Abilities_Passive_LifeSiphon;
 	FGameplayTag Abilities_Passive_ManaSiphon;
-
-
 
 	// ** Debuffs ** //  // ep. 303
 	FGameplayTag Debuff_Burn; 
@@ -123,6 +122,9 @@ public:
 	FGameplayTag Player_Block_InputHeld; // ep. 323
 	FGameplayTag Player_Block_InputReleased; // ep. 323
 	FGameplayTag Player_Block_CursorTrace; // ep. 323
+
+	//** GameplayCues **//
+	FGameplayTag GameplayCue_FireBlast;
 
 
 
