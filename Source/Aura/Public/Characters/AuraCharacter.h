@@ -21,6 +21,9 @@ public:
 
 	AAuraCharacter();
 	virtual void PossessedBy(AController* NewController) override;
+	
+	void LoadProgress();
+	
 	virtual void OnRep_PlayerState() override;
 
 	//** Player Interface **//
@@ -37,6 +40,7 @@ public:
 	virtual void LevelUp_Implementation() override;
 	virtual void ShowMagicCircle_Implementation(UMaterialInterface* DecalMaterial = nullptr) override;
 	virtual void HideMagicCircle_Implementation() override;
+	virtual void SaveProgress_Implementation(const FName& CheckpointTag) override;
 
 	//** Combat Interface **//
 	virtual int32 GetPlayerLevel_Implementation() override;

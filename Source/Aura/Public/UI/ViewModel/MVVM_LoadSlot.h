@@ -30,13 +30,14 @@ public:
 
 	void InitializeSlot();
 
-
-
 	UPROPERTY()
 	int32 SlotIndex;
 	
 	UPROPERTY()
 	TEnumAsByte<ESaveSlotStatus> SlotStatus;
+
+	UPROPERTY()
+	FName PlayerStartTag;
 
 	// ** Field Notifies ** //
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
