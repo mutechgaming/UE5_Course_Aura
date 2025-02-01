@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Interaction/EnemyInterface.h"
+#include "Interaction/HighlightInterface.h"
 #include "GameplayTagContainer.h"
 #include "AuraPlayerController.generated.h"
 
@@ -19,12 +20,18 @@ class UAuraAbilitySystemComponent;
 class UDamageTextComponent;
 class USplineComponent;
 class IEnemyInterface;
+class IHighlightInterface;
 struct FInputActionValue; 
 
 
-/**
- * 
- */
+enum class ETargetingStatus : uint8
+{
+	TargetingEnemy,
+	TargetingNonEnemy,
+	NotTargeting
+};
+
+
 UCLASS()
 class AURA_API AAuraPlayerController : public APlayerController
 {
@@ -67,9 +74,12 @@ private:
 	void Move(const FInputActionValue &InputActionValue);
 
 	void CursorTrace();
-	TScriptInterface<IEnemyInterface> LastActor;
-	TScriptInterface<IEnemyInterface> ThisActor;
+	TObjectPtr<AActor> LastActor; 
+	TObjectPtr<AActor> ThisActor;
 	FHitResult CursorHit;
+
+	void HighlightActor(AActor* InActor);
+	void UnHighlightActor(AActor* InActor);
 
 	void AbilityInputTagPressed(FGameplayTag InputTag);
 	void AbilityInputTagReleased(FGameplayTag InputTag);
@@ -87,7 +97,7 @@ private:
 	float FollowTime = 0.f; 
 	float ShortPressedThreshold = 0.5f;
 	bool bAutoRunning = false;
-	bool bTargeting = false;
+	ETargetingStatus TargetingStatus = ETargetingStatus::NotTargeting;
 
 	UPROPERTY(EditDefaultsOnly)
 	float AutoRunAcceptanceRadius = 50.f;

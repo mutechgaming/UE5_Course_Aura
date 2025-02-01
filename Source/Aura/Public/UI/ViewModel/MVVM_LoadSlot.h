@@ -55,6 +55,11 @@ public:
 	void SetLoadSlotName(FString InLoadSlotName);
 	FString GetLoadSlotName() const { return LoadSlotName; }
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, FieldNotify, Setter, Getter)
+	int32 PlayerLevel;
+	void SetPlayerLevel(int32 InLevel);
+	int32 GetPlayerLevel() const { return PlayerLevel; }
+
 private:
 
 

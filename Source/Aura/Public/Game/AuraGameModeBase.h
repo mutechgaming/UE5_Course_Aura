@@ -29,6 +29,11 @@ public:
 	static void DeleteSlot(const FString& SlotName, int32 SlotIndex);
 	void SaveInGameProgressData(ULoadScreenSaveGame* SaveObject);
 
+	void SaveWorldState(UWorld* World);
+	void LoadWorldState(UWorld* World);
+
+	// FString DestinationMapAssetName = FString(""))
+
 	ULoadScreenSaveGame* GetSavedSlotData(const FString& SlotName, int32 SlotIndex) const;
 	ULoadScreenSaveGame* RetrieveInGameSaveData();
 
@@ -46,6 +51,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	TMap<FString, TSoftObjectPtr<UWorld>> Maps;
+
+	FString GetMapNameFromMapAssetName(const FString& MapAssetName) const;
 
 	UPROPERTY(EditDefaultsOnly)
 	FName DefaultPlayerStartTag;

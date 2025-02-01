@@ -9,6 +9,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "Characters/AuraCharacterBase.h"
 #include "Interaction/EnemyInterface.h"
+#include "Interaction/HighlightInterface.h"
 #include "UI/WidgetController/OverlayWidgetController.h" 
 #include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "AuraEnemy.generated.h"
@@ -19,7 +20,7 @@ class UBehaviorTree;
 class UWidgetComponent;
 
 UCLASS()
-class AURA_API AAuraEnemy : public AAuraCharacterBase, public IEnemyInterface
+class AURA_API AAuraEnemy : public AAuraCharacterBase, public IEnemyInterface, public IHighlightInterface
 {
 	GENERATED_BODY()
 	
@@ -28,9 +29,10 @@ public:
 
 	virtual void PossessedBy(AController* NewController) override;
 
-	//** Enemy Interfaces ** //
-	virtual void HighlightActor() override;
-	virtual void UnHighlightActor() override;
+	//** Hightlight Interfaces ** //
+	virtual void HighlightActor_Implementation() override;
+	virtual void UnHighlightActor_Implementation() override;
+	virtual void SetMoveToLocation_Implementation(FVector& OutDestination) override;
 
 
 	//** Combat Interface **//
